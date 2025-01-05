@@ -8,23 +8,39 @@
         /* Global styles */
         body {
             margin: 0;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Courier New', monospace;
             background: black;
             color: white;
             overflow: hidden;
         }
 
-        /* Background effect */
-        .background {
+        /* Matrix Effect */
+        .matrix {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://wallpaperaccess.com/full/1240380.jpg') no-repeat center center fixed;
-            background-size: cover;
-            filter: brightness(0.4);
+            color: #0f0;
+            font-size: 20px;
+            font-family: monospace;
+            overflow: hidden;
             z-index: -1;
+        }
+        .matrix span {
+            position: absolute;
+            display: block;
+            animation: drop 5s linear infinite;
+        }
+        @keyframes drop {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh);
+            }
         }
 
         /* Header */
@@ -34,15 +50,15 @@
         }
         .header h1 {
             font-size: 3em;
-            color: #f00;
+            color: #fff;
             margin-bottom: 20px;
         }
         .header p {
             font-size: 1.5em;
-            color: #0f0;
+            color: #aaa;
         }
 
-        /* Countdown timers */
+        /* Countdown */
         .countdown-section {
             text-align: center;
             margin: 50px 0;
@@ -68,7 +84,7 @@
     </style>
 </head>
 <body>
-    <div class="background"></div>
+    <div class="matrix" id="matrix"></div>
 
     <!-- Header -->
     <div class="header">
@@ -76,15 +92,10 @@
         <p>Something That Will Shake Memecoin Universe</p>
     </div>
 
-    <!-- Countdown sections -->
+    <!-- Countdown section -->
     <div class="countdown-section">
-        <!-- Crypto Launch Countdown -->
         <div class="subtext">Countdown to Launch</div>
         <div class="countdown" id="launchCountdown">Calculating...</div>
-
-        <!-- Agenda 2030 Countdown -->
-        <div class="subtext">Countdown to 2030</div>
-        <div class="countdown" id="agendaCountdown">Calculating...</div>
     </div>
 
     <!-- Footer -->
@@ -93,9 +104,23 @@
     </div>
 
     <script>
+        // Matrix Effect
+        const matrixContainer = document.getElementById('matrix');
+        const createMatrixEffect = () => {
+            for (let i = 0; i < 300; i++) {
+                const span = document.createElement('span');
+                span.textContent = Math.floor(Math.random() * 10);
+                span.style.left = `${Math.random() * 100}vw`;
+                span.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                span.style.animationDelay = `${Math.random() * 5}s`;
+                matrixContainer.appendChild(span);
+            }
+        };
+        createMatrixEffect();
+
         // Launch Countdown
         function updateLaunchCountdown() {
-            const launchDate = new Date("March 15, 2025 00:00:00").getTime();
+            const launchDate = new Date("January 20, 2025 00:00:00").getTime();
             const now = new Date().getTime();
             const timeLeft = launchDate - now;
 
@@ -107,25 +132,8 @@
             document.getElementById('launchCountdown').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
 
-        // Agenda 2030 Countdown
-        function updateAgendaCountdown() {
-            const agendaDate = new Date("January 1, 2030 00:00:00").getTime();
-            const now = new Date().getTime();
-            const timeLeft = agendaDate - now;
-
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-            document.getElementById('agendaCountdown').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }
-
-        // Update both countdowns every second
-        setInterval(() => {
-            updateLaunchCountdown();
-            updateAgendaCountdown();
-        }, 1000);
+        // Update countdown every second
+        setInterval(updateLaunchCountdown, 1000);
     </script>
 </body>
 </html>
