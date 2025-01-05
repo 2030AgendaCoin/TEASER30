@@ -92,10 +92,13 @@
         <p>Something That Will Shake Memecoin Universe</p>
     </div>
 
-    <!-- Countdown section -->
+    <!-- Countdown sections -->
     <div class="countdown-section">
         <div class="subtext">Countdown to Launch</div>
         <div class="countdown" id="launchCountdown">Calculating...</div>
+
+        <div class="subtext">Countdown to 2030</div>
+        <div class="countdown" id="agendaCountdown">Calculating...</div>
     </div>
 
     <!-- Footer -->
@@ -132,8 +135,25 @@
             document.getElementById('launchCountdown').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
 
-        // Update countdown every second
-        setInterval(updateLaunchCountdown, 1000);
+        // Agenda 2030 Countdown
+        function updateAgendaCountdown() {
+            const agendaDate = new Date("January 1, 2030 00:00:00").getTime();
+            const now = new Date().getTime();
+            const timeLeft = agendaDate - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('agendaCountdown').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // Update countdowns every second
+        setInterval(() => {
+            updateLaunchCountdown();
+            updateAgendaCountdown();
+        }, 1000);
     </script>
 </body>
 </html>
